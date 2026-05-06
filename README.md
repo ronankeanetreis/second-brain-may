@@ -45,6 +45,14 @@ Note: `uv run --env-file .env` loads the dev environment explicitly — there is
 | `LOG_LEVEL` | `INFO`    | Console log level. Set to `DEBUG` in `.env` for verbose output. |
 | `LOG_FILE`  | `app.log` | Path to the log file.                              |
 
+### Log format
+
+```
+2026-05-06 14:32:07 | I | second_brain.app:main:29 | Hello from second_brain!
+```
+
+Timestamp has no milliseconds; level is a single uppercase letter (`D`, `I`, `W`, `E`, `C`); all fields separated by `|`.
+
 ## Testing
 
 Run tests:
