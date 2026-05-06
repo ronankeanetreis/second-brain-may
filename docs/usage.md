@@ -31,3 +31,11 @@ uv run python -m second_brain
 | `LOG_FILE`  | `app.log`  | Path to the log file                 |
 
 Copy `.env.example` to `.env` for development defaults, then run with `uv run --env-file .env`.
+
+### Log format
+
+```
+2026-05-06 14:32:07 | I | second_brain.app:main:29 | Hello from second_brain!
+```
+
+Timestamp has no milliseconds; level is a single uppercase letter (`D`, `I`, `W`, `E`, `C`); all fields separated by `|`.
