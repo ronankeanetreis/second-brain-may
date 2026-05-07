@@ -32,7 +32,28 @@ def test_save_note_creates_file(monkeypatch, tmp_path):
     monkeypatch.setenv("SECOND_BRAIN_DIR", str(tmp_path))
     path = save_note("Hello world")
     assert path.exists()
-    assert path.read_text() == "Hello world"
+    assert path.read_text(encoding="utf-8") == "Hello world"
+
+
+def test_save_note_utf8_encoding(monkeypatch, tmp_path):
+    monkeypatch.setenv("SECOND_BRAIN_DIR", str(tmp_path))
+    path = save_note("Héllo wörld 🧠")
+    assert path.read_text(encoding="utf-8") == "Héllo wörld 🧠"
+
+
+def test_save_note_no_collision(monkeypatch, tmp_path):
+    monkeypatch.setenv("SECOND_BRAIN_DIR", str(tmp_path))
+    path1 = save_note("My idea")
+    path2 = save_note("My idea")
+    assert path1 != path2
+    assert path1.exists()
+    assert path2.exists()
+
+
+def test_get_notes_dir_expands_tilde(monkeypatch):
+    monkeypatch.setenv("SECOND_BRAIN_DIR", "~/my_notes")
+    result = get_notes_dir()
+    assert not str(result).startswith("~")
 
 
 def test_save_note_filename_format(monkeypatch, tmp_path):
