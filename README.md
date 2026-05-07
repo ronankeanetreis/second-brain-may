@@ -12,22 +12,23 @@ uv sync
 
 ## Usage
 
-Via the CLI entrypoint:
+Save a quick note:
 
 ```bash
-uv run second_brain
+uv run second_brain new "My brilliant idea about caching"
+# => /home/user/second_brain/2026-05-07-my-brilliant-idea-about-caching.md
 ```
 
 With dev environment variables loaded:
 
 ```bash
-uv run --env-file .env second_brain
+uv run --env-file .env second_brain new "My idea"
 ```
 
 Via Python module:
 
 ```bash
-uv run python -m second_brain
+uv run python -m second_brain new "My idea"
 ```
 
 ## Environment Variables
@@ -40,10 +41,11 @@ cp .env.example .env
 
 Note: `uv run --env-file .env` loads the dev environment explicitly — there is no auto-loading.
 
-| Variable    | Default   | Description                                        |
-|-------------|-----------|----------------------------------------------------|
-| `LOG_LEVEL` | `INFO`    | Console log level. Set to `DEBUG` in `.env` for verbose output. |
-| `LOG_FILE`  | `app.log` | Path to the log file.                              |
+| Variable           | Default           | Description                                        |
+|--------------------|-------------------|----------------------------------------------------|
+| `SECOND_BRAIN_DIR` | `~/second_brain/` | Directory where notes are saved. Created automatically if missing. |
+| `LOG_LEVEL`        | `INFO`            | Console log level. Set to `DEBUG` in `.env` for verbose output. |
+| `LOG_FILE`         | `app.log`         | Path to the log file.                              |
 
 ## Testing
 

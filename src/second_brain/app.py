@@ -1,6 +1,9 @@
+import argparse
 import sys
 
 from loguru import logger
+
+from second_brain.notes import save_note
 
 
 def configure_logging():
@@ -21,9 +24,18 @@ def configure_logging():
 
 @logger.catch
 def main():
-    """Run the application.
-
-    Configures logging and prints a greeting to verify the setup works.
-    """
+    """Run the application."""
     configure_logging()
-    logger.info("Hello from second_brain!")
+    parser = argparse.ArgumentParser(prog="second_brain")
+    subparsers = parser.add_subparsers(dest="command")
+
+    new_parser = subparsers.add_parser("new", help="Save a quick note as a markdown file")
+    new_parser.add_argument("text", help="Note text to save")
+
+    args = parser.parse_args()
+
+    if args.command == "new":
+        path = save_note(args.text)
+        print(path)
+    else:
+        parser.print_help()
