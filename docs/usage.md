@@ -10,25 +10,32 @@ uv sync
 
 ## Running
 
-Via the CLI entrypoint:
+Save a quick note from the terminal:
 
 ```bash
-uv run second_brain                          # production defaults
-uv run --env-file .env second_brain          # dev settings
+uv run second_brain new "My brilliant idea about caching"
+# => /home/user/second_brain/2026-05-07-my-brilliant-idea-about-caching.md
+```
+
+With dev environment variables loaded:
+
+```bash
+uv run --env-file .env second_brain new "My idea"
 ```
 
 Or as a Python module:
 
 ```bash
-uv run python -m second_brain
+uv run python -m second_brain new "My idea"
 ```
 
 ## Environment Variables
 
-| Variable    | Default    | Description                          |
-|-------------|------------|--------------------------------------|
-| `LOG_LEVEL` | `INFO`     | Console log level (DEBUG, INFO, …)   |
-| `LOG_FILE`  | `app.log`  | Path to the log file                 |
+| Variable           | Default           | Description                          |
+|--------------------|-------------------|--------------------------------------|
+| `SECOND_BRAIN_DIR` | `~/second_brain/` | Directory where notes are saved. Created automatically if missing. |
+| `LOG_LEVEL`        | `INFO`            | Console log level (DEBUG, INFO, …)   |
+| `LOG_FILE`         | `app.log`         | Path to the log file                 |
 
 Copy `.env.example` to `.env` for development defaults, then run with `uv run --env-file .env`.
 

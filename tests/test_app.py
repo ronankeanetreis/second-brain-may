@@ -1,29 +1,18 @@
-import re
+import sys
 
 from second_brain.app import main
 
 
-def test_main_logs_greeting(capfd):
+def test_new_command_prints_path(monkeypatch, tmp_path, capsys):
+    monkeypatch.setenv("SECOND_BRAIN_DIR", str(tmp_path))
+    monkeypatch.setattr(sys, "argv", ["second_brain", "new", "My brilliant idea about caching"])
     main()
-    captured = capfd.readouterr()
-    assert "Hello from second_brain!" in captured.err
+    captured = capsys.readouterr()
+    assert ".md" in captured.out
 
 
-def test_log_format_no_milliseconds(capfd):
+def test_no_subcommand_prints_help(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["second_brain"])
     main()
-    captured = capfd.readouterr()
-    assert re.search(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \|", captured.err)
-    assert not re.search(r"\d{2}:\d{2}:\d{2}\.\d+", captured.err)
-
-
-def test_log_format_single_letter_level(capfd):
-    main()
-    captured = capfd.readouterr()
-    assert re.search(r"\| [A-Z] \|", captured.err)
-
-
-def test_log_format_pipe_before_message(capfd):
-    main()
-    captured = capfd.readouterr()
-    assert "| Hello from second_brain!" in captured.err
-    assert "- Hello from second_brain!" not in captured.err
+    captured = capsys.readouterr()
+    assert "usage" in captured.out.lower() or "usage" in captured.err.lower()
